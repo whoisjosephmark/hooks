@@ -2,14 +2,15 @@
   "name": "@josephmark/hooks",
   "version": "1.0.1",
   "description": "A collection of useful React Hooks",
-  "main": "lib/index.js",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
     "prepare": "npm run build"
   },
   "files": [
-    "lib/**/*"
+    "*.js",
+    "*.d.ts"
   ],
   "repository": {
     "type": "git",
