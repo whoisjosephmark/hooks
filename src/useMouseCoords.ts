@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react"
 
+/**
+ * Fetch current mouse coordinates
+ *
+ * @returns [number, number]
+ */
 export default function useMouseCoords() {
   const [coords, setCoords] = useState([0, 0])
   useEffect(() => {

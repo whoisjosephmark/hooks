@@ -1,11 +1,19 @@
-import { useRef, useEffect } from "react"
+import {
+  useRef,
+  useEffect,
+  useCallback,
+  MouseEventHandler,
+  MouseEvent,
+} from "react"
 
 const DRAG_CLICK_ALLOWANCE = 10
 
 /**
  * Allows mouse users to easily click+drag to scroll (horizontal only).
- * Recommended for use with scroll-snap carousels.
+ * Plays nice with scroll-snap carousels.
  * Apply the returned ref to the element you want to be draggable.
+ *
+ * @return React.RefObject<HTMLDivElement>
  */
 export default function useDraggable() {
   const ref = useRef<HTMLDivElement>(null)
@@ -22,7 +30,7 @@ export default function useDraggable() {
     const track = ref.current
     track.style.cursor = "grab"
 
-    const cancelClick = (e: MouseEvent) => {
+    const cancelClick = function (e: MouseEvent) {
       if (
         mouseInitialX &&
         Math.abs(e.clientX - mouseInitialX) > DRAG_CLICK_ALLOWANCE
@@ -32,25 +40,24 @@ export default function useDraggable() {
       }
       mouseInitialX = null
       trackInitialX = null
-      if (!e.target) {
-        return
-      }
-      e.target.removeEventListener("click", cancelClick)
+      e.target.removeEventListener("click", this)
     }
+
     const onDrag = (e: MouseEvent) => {
       track.scrollTo(trackInitialX - e.clientX + mouseInitialX, 0)
       e.preventDefault()
       e.stopPropagation()
       return false
     }
-    const onMouseUp = () => {
+
+    const onMouseUp = function () {
       track.style.scrollBehavior = null
       track.style.cursor = "grab"
       requestAnimationFrame(() => {
         track.style.scrollSnapType = null
       })
-      window.removeEventListener("mousemove", onDrag)
-      window.removeEventListener("mouseup", onMouseUp)
+      window.removeEventListener("mousemove", onDrag as any)
+      window.removeEventListener("mouseup", this)
     }
 
     const onMouseDown = (e: MouseEvent) => {
@@ -62,21 +69,20 @@ export default function useDraggable() {
       trackInitialX = track.scrollLeft
       track.style.scrollBehavior = "auto"
       track.style.scrollSnapType = "none"
-      window.addEventListener("mousemove", onDrag)
+      window.addEventListener("mousemove", onDrag as any)
       window.addEventListener("mouseup", onMouseUp)
       target = e.target
-      target.addEventListener("click", cancelClick)
+      target.addEventListener("click", cancelClick as any)
     }
-
-    track.addEventListener("mousedown", onMouseDown)
+    track.addEventListener("mousedown", onMouseDown as any)
 
     return () => {
-      track.removeEventListener("mousedown", onMouseDown)
+      track.removeEventListener("mousedown", onMouseDown as any)
       window.removeEventListener("mouseup", onMouseUp)
       if (!target) {
         return
       }
-      target.removeEventListener("click", cancelClick)
+      target.removeEventListener("click", cancelClick as any)
     }
   }, [])
 
