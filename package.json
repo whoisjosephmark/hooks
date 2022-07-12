@@ -1,6 +1,6 @@
 {
   "name": "@josephmark/hooks",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A collection of useful React Hooks",
   "main": "index.js",
   "scripts": {
