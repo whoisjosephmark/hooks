@@ -18,17 +18,23 @@ export default function useDraggable() {
     }
     let mouseInitialX: number | null = null
     let trackInitialX: number | null = null
-    let target: EventTarget = null
+    let target: EventTarget
     const track = ref.current
     track.style.cursor = "grab"
 
     const cancelClick = (e: MouseEvent) => {
-      if (Math.abs(e.clientX - mouseInitialX) > DRAG_CLICK_ALLOWANCE) {
+      if (
+        mouseInitialX &&
+        Math.abs(e.clientX - mouseInitialX) > DRAG_CLICK_ALLOWANCE
+      ) {
         e.preventDefault()
         e.stopPropagation()
       }
       mouseInitialX = null
       trackInitialX = null
+      if (!e.target) {
+        return
+      }
       e.target.removeEventListener("click", cancelClick)
     }
     const onDrag = (e: MouseEvent) => {
