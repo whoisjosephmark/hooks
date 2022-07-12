@@ -1,0 +1,22 @@
+{
+  "name": "@josephmark/hooks",
+  "version": "1.0.0",
+  "description": "A collection of useful React Hooks",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/whoisjosephmark/hooks.git"
+  },
+  "author": "@floatingdino",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/whoisjosephmark/hooks/issues"
+  },
+  "homepage": "https://github.com/whoisjosephmark/hooks#readme",
+  "peerDependencies": {
+    "react": "^18.2.0"
+  }
+}
