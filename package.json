@@ -18,5 +18,10 @@
   "homepage": "https://github.com/whoisjosephmark/hooks#readme",
   "peerDependencies": {
     "react": "^18.2.0"
-  }
+  },
+  "dependencies": {
+    "js-tokens": "^4.0.0",
+    "loose-envify": "^1.4.0"
+  },
+  "devDependencies": {}
 }
