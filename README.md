@@ -10,13 +10,16 @@ A collection of useful React hooks from the team at [Josephmark](https://josephm
 
 - [useMouseCoords](#usemousecoords)
 - [useDraggable](#usedraggable)
+- [useWindowSize](#usewindowsize)
+- [WindowSizeContext](#windowsizecontext)
+- [useIdList](#useidlist)
 
 ## Usage
 
 ### `useMouseCoords`
 
 ```jsx
-import useMouseCoords from "@josephmark/hooks/useMouseCoords"
+import { useMouseCoords } from "@josephmark/hooks"
 
 function ComponentWithCoords() {
   const [left, top] = useMouseCoords()
@@ -32,7 +35,7 @@ function ComponentWithCoords() {
 ### `useDraggable`
 
 ```jsx
-import useDraggable from "@josephmark/hooks/useDraggable"
+import { useDraggable } from "@josephmark/hooks"
 
 function DraggableComponent() {
   const ref = useDraggable()
@@ -120,3 +123,49 @@ The debounce delay can be changed by passing a delay prop to the WindowSizeProvi
   }
 
 ```
+### `useIdList`
+```jsx
+  import {
+    useIdList,
+    idListSmallestId,
+    idListLargestId,
+    idListUnique,
+  } from "@josephmark/hooks"
+
+  const baseList = [
+    { id: 3, name: "Apple", },
+    { id: 1, name: "Pineapple", },
+    { id: 4, name: "Rose Apple", },
+    { id: 6, name: "Velvet Apple A", },
+    { id: 6, name: "Velvet Apple B", },
+  ]
+
+  function IdListComponent () {
+    const [list, setList, updateId, removeId] = useIdList(baseList)
+    // We can update a value at an id by passing in the id and the change
+    const fullNameApple = () => updateId({
+      id: 3,
+      name: "Malus pumila,",
+    })
+    // We can remove at an id
+    const removePineapple = () => removeId({ id: 1 })
+    // We can get the smallest id
+    const smallestId = () => console.log(idListSmallestId(list))
+    // We can get the largest id
+    const largestId = () => console.log(idListLargestId(list))
+    // We can remove any duplicate id
+    const unique = () => setList(idListUnique(list))
+
+    return (
+      {list.map((item, index) => {
+        return (
+          <div key={`${item?.id}${index}`}>
+            {item?.id} {item?.name}
+          </div>
+        )
+      })}
+    )
+  }
+
+```
+
