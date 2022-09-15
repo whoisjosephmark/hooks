@@ -56,3 +56,67 @@ function DraggableComponent() {
   )
 }
 ```
+
+### `useWindowSize`
+Used for when a SSR and debounced access to the screen size is required.
+
+To allow SSR rendering the default screen size is set to 
+```js
+{width: 1200, height: 800}
+```
+
+The default debounce is 60 times a second (`1000/60`). The debounce delay can be changed by passing a delay prop to the hook.
+Setting the delay to 0 will allow the hook to run un-debounced which is useful if you want to use a single hook to provide width and height updates at different tick rates.
+
+```jsx
+  import { useWindowSize } from "@josephmark/hooks"
+
+  const DELAY = 1000/60
+  
+  function WindowSizeComponent () => {
+    const { height, width } = useWindowSize(DELAY)
+
+    return <div>
+      <p>
+        Width: {width}
+        <br />
+        Heigh: {height}
+      </p>
+    </div>
+  }
+```
+
+### `WindowSizeContext`
+Scattering `useWindowSize` around a project can lead to performance issues as each instance of `useWindowSize` adds another event handler to `window`. To avoid this we can use the `WindowSizeContext` context.
+
+We first wrap our children in the provider:
+```jsx
+  import { WindowSizeContext, WindowSizeProvider } from "@josephmark/hooks"
+
+  const DELAY = 1000 / 60
+
+  return <div>
+    <WindowSizeProvider delay={DELAY}>
+      <WindowSizeComponent />
+    </WindowSizeProvider>
+  </div>
+```
+The debounce delay can be changed by passing a delay prop to the WindowSizeProvider.
+
+```jsx
+  import { useContext } from "react"
+  import { WindowSizeContext } from "@josephmark/hooks"
+
+  function WindowSizeComponent () => {
+    const { height, width } = useContext(WindowSizeContext)
+
+    return <div>
+      <p>
+        Width: {width}
+        <br />
+        Heigh: {height}
+      </p>
+    </div>
+  }
+
+```
