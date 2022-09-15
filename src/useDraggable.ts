@@ -1,10 +1,4 @@
-import {
-  useRef,
-  useEffect,
-  useCallback,
-  MouseEventHandler,
-  MouseEvent,
-} from "react"
+import { useRef, useEffect, MouseEvent } from "react"
 
 const DRAG_CLICK_ALLOWANCE = 10
 
