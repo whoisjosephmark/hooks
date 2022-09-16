@@ -27,6 +27,8 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "allowSyntheticDefaultImports": true,
+    "isolatedModules": true,
+    "declarationMap": true,
   },
   "include": [
     "src"
