@@ -1,12 +1,25 @@
 {
   "name": "@josephmark/hooks",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A collection of useful React Hooks",
-  "main": "index.js",
+  "main": "./lib/cjs/index.js",
+  "module": "./lib/esm/index.js",
+  "types": "./lib/esm/index.d.ts",
+  "exports": {
+    ".": {
+      "require": "./lib/cjs/index.js",
+      "import": "./lib/esm/index.js",
+      "types": "./lib/esm/index.d.ts"
+    }
+  },
+  "sideEffects": false,
   "scripts": {
     "test": "eslint ./src/* && tsc --noEmit",
-    "build": "tsc",
-    "prepare": "npm run build"
+    "build": "npm run build:esm && npm run build:cjs",
+    "clean": "rm -r ./lib",
+    "prepare": "npm run build",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs"
   },
   "keywords": [
     "react",
@@ -14,6 +27,7 @@
   ],
   "files": [
     "*.js",
+    "*.jsx",
     "*.d.ts"
   ],
   "repository": {

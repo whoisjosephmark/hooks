@@ -20,7 +20,7 @@ export default function useDraggable<T extends HTMLElement = HTMLDivElement>() {
     }
     let mouseInitialX: number | null = null
     let trackInitialX: number | null = null
-    let target: EventTarget
+    let target: EventTarget | null
     const track = ref.current
     track.style.cursor = "grab"
 
@@ -34,24 +34,24 @@ export default function useDraggable<T extends HTMLElement = HTMLDivElement>() {
       }
       mouseInitialX = null
       trackInitialX = null
-      e.target.removeEventListener("click", this)
+      e?.target?.removeEventListener("click", cancelClick)
     }
 
     function onDrag(e: MouseEvent) {
-      track.scrollTo(trackInitialX - e.clientX + mouseInitialX, 0)
+      track.scrollTo((trackInitialX || 0) - e.clientX + (mouseInitialX || 0), 0)
       e.preventDefault()
       e.stopPropagation()
       return false
     }
 
     function onMouseUp() {
-      track.style.scrollBehavior = null
+      track.style.scrollBehavior = ""
       track.style.cursor = "grab"
       requestAnimationFrame(() => {
-        track.style.scrollSnapType = null
+        track.style.scrollSnapType = ""
       })
       window.removeEventListener("mousemove", onDrag)
-      window.removeEventListener("mouseup", this)
+      window.removeEventListener("mouseup", onMouseUp)
     }
 
     function onMouseDown(e: MouseEvent) {
@@ -66,7 +66,7 @@ export default function useDraggable<T extends HTMLElement = HTMLDivElement>() {
       window.addEventListener("mousemove", onDrag)
       window.addEventListener("mouseup", onMouseUp)
       target = e.target
-      target.addEventListener("click", cancelClick)
+      target?.addEventListener("click", cancelClick)
     }
     track.addEventListener("mousedown", onMouseDown)
 
