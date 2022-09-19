@@ -42,8 +42,7 @@
   },
   "dependencies": {
     "js-tokens": "^4.0.0",
-    "loose-envify": "^1.4.0",
-    "use-debounce": "^8.0.4"
+    "loose-envify": "^1.4.0"
   },
   "devDependencies": {
     "eslint": "^8.19.0",
