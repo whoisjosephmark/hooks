@@ -16,7 +16,7 @@ A collection of useful React hooks from the team at [Josephmark](https://josephm
 ### `useMouseCoords`
 
 ```jsx
-import useMouseCoords from "@josephmark/hooks/useMouseCoords"
+import { useMouseCoords } from "@josephmark/hooks"
 
 function ComponentWithCoords() {
   const [left, top] = useMouseCoords()
@@ -32,7 +32,7 @@ function ComponentWithCoords() {
 ### `useDraggable`
 
 ```jsx
-import useDraggable from "@josephmark/hooks/useDraggable"
+import { useDraggable } from "@josephmark/hooks"
 
 function DraggableComponent() {
   const ref = useDraggable()

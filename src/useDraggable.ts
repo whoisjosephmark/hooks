@@ -1,10 +1,4 @@
-import {
-  useRef,
-  useEffect,
-  useCallback,
-  MouseEventHandler,
-  MouseEvent,
-} from "react"
+import { useRef, useEffect, MouseEvent } from "react"
 
 const DRAG_CLICK_ALLOWANCE = 10
 
@@ -22,7 +16,7 @@ export default function useDraggable() {
   useEffect(() => {
     const mq = window.matchMedia("(pointer: coarse)")
     if (mq.matches || !ref.current) {
-      return () => {}
+      return () => { }
     }
     let mouseInitialX: number | null = null
     let trackInitialX: number | null = null
@@ -30,7 +24,7 @@ export default function useDraggable() {
     const track = ref.current
     track.style.cursor = "grab"
 
-    const cancelClick = function (e: MouseEvent) {
+    const cancelClick = function (this: any, e: MouseEvent) {
       if (
         mouseInitialX &&
         Math.abs(e.clientX - mouseInitialX) > DRAG_CLICK_ALLOWANCE
@@ -44,17 +38,17 @@ export default function useDraggable() {
     }
 
     const onDrag = (e: MouseEvent) => {
-      track.scrollTo(trackInitialX - e.clientX + mouseInitialX, 0)
+      track.scrollTo((trackInitialX || 0) - e.clientX + (mouseInitialX || 0), 0)
       e.preventDefault()
       e.stopPropagation()
       return false
     }
 
-    const onMouseUp = function () {
-      track.style.scrollBehavior = null
+    const onMouseUp = function (this: any) {
+      track.style.scrollBehavior = "" // null
       track.style.cursor = "grab"
       requestAnimationFrame(() => {
-        track.style.scrollSnapType = null
+        track.style.scrollSnapType = "" // null
       })
       window.removeEventListener("mousemove", onDrag as any)
       window.removeEventListener("mouseup", this)
