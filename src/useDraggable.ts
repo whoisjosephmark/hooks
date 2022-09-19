@@ -16,7 +16,7 @@ export default function useDraggable<T extends HTMLElement = HTMLDivElement>() {
   useEffect(() => {
     const mq = window.matchMedia("(pointer: coarse)")
     if (mq.matches || !ref.current) {
-      return () => { }
+      return () => {}
     }
     let mouseInitialX: number | null = null
     let trackInitialX: number | null = null
