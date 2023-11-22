@@ -1,5 +1,7 @@
 # @josephmark/hooks
 
+[![Run Tests](https://github.com/whoisjosephmark/hooks/actions/workflows/test.yml/badge.svg)](https://github.com/whoisjosephmark/hooks/actions/workflows/test.yml)
+
 A collection of useful React hooks from the team at [Josephmark](https://josephmark.studio)
 
 ## Installation
@@ -30,6 +32,8 @@ function ComponentWithCoords() {
 ```
 
 ### `useDraggable`
+
+Gives drag-to-scroll features on a container element for touch-like interactions with a mouse.
 
 ```jsx
 import { useDraggable } from "@josephmark/hooks"
