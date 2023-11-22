@@ -9,8 +9,10 @@ const DRAG_CLICK_ALLOWANCE = 10
  *
  * @return React.RefObject<T extends HTMLElement>
  */
-export default function useDraggable<T extends HTMLElement = HTMLDivElement>() {
-  const ref = useRef<T>(null)
+export default function useDraggable<T extends HTMLElement = HTMLDivElement>(
+  defaultRef: T | null = null
+) {
+  const ref = useRef<T>(defaultRef)
 
   // Handling for click & drag to slide with mouse
   useEffect(() => {
