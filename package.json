@@ -26,9 +26,8 @@
     "hooks"
   ],
   "files": [
-    "*.js",
-    "*.jsx",
-    "*.d.ts"
+    "lib/**/*.js",
+    "lib/**/*.d.ts"
   ],
   "repository": {
     "type": "git",
