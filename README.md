@@ -12,6 +12,7 @@ A collection of useful React hooks from the team at [Josephmark](https://josephm
 
 - [useMouseCoords](#usemousecoords)
 - [useDraggable](#usedraggable)
+- [useScreenEntry](#usescreenentry)
 
 ## Usage
 
@@ -56,6 +57,22 @@ function DraggableComponent() {
             }}
           />
         ))}
+    </div>
+  )
+}
+```
+
+### `useScreenEntry`
+
+```jsx
+import { useScreenEntry } from "@josephmark/hooks"
+
+function ComponentWithScreenEntry() {
+  const {ref, onScreen} = useScreenEntry()
+
+  return (
+    <div ref={ref} style={{opacity: onScreen ? 1 : 0, transition: "opacity 300ms"}}>
+      This element will be revealed when it enters the screen
     </div>
   )
 }
