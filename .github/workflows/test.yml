@@ -3,7 +3,7 @@ on: [push]
 jobs:
   test:
     runs-on: ubuntu-latest
-    container: node:16-slim
+    container: node:18-alpine
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - run: npm cit
