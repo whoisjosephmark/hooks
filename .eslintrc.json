@@ -1,3 +1,4 @@
 {
-  "extends": ["@josephmark/react"]
+  "extends": ["@josephmark/react"],
+  "parser": "@typescript-eslint/parser"
 }
