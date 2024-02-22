@@ -40,7 +40,8 @@ Gives drag-to-scroll features on a container element for touch-like interactions
 import { useDraggable } from "@josephmark/hooks"
 
 function DraggableComponent() {
-  const ref = useDraggable()
+  // Options argument is not required, these are the default values
+  const ref = useDraggable({ autoCursor: true, dragClickAllowance: 10 })
 
   return (
     <div style={{ display: "flex", overflow: "auto", gap: "1rem" }} ref={ref}>
@@ -68,10 +69,13 @@ function DraggableComponent() {
 import { useScreenEntry } from "@josephmark/hooks"
 
 function ComponentWithScreenEntry() {
-  const {ref, onScreen} = useScreenEntry()
+  const { ref, onScreen } = useScreenEntry()
 
   return (
-    <div ref={ref} style={{opacity: onScreen ? 1 : 0, transition: "opacity 300ms"}}>
+    <div
+      ref={ref}
+      style={{ opacity: onScreen ? 1 : 0, transition: "opacity 300ms" }}
+    >
       This element will be revealed when it enters the screen
     </div>
   )
