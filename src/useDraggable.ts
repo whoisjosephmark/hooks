@@ -1,10 +1,10 @@
-import { useRef, useEffect } from "react"
+import { useEffect, useRef } from "react"
 
 const DRAG_CLICK_ALLOWANCE = 10
 
 export type useDraggableOptions = {
   autoCursor?: boolean
-  dragClickAllowance: number
+  dragClickAllowance?: number
 }
 
 /**
@@ -18,13 +18,9 @@ export type useDraggableOptions = {
  *
  * @return React.RefObject<T extends HTMLElement>
  */
-export default function useDraggable<T extends HTMLElement = HTMLDivElement>(
-  options: useDraggableOptions = {
-    autoCursor: true,
-    dragClickAllowance: DRAG_CLICK_ALLOWANCE,
-  }
-) {
+export default function useDraggable<T extends HTMLElement = HTMLDivElement>(options: useDraggableOptions) {
   const ref = useRef<T>()
+  const { autoCursor = true, dragClickAllowance = DRAG_CLICK_ALLOWANCE } = options
 
   // Handling for click & drag to slide with mouse
   useEffect(() => {
@@ -36,15 +32,12 @@ export default function useDraggable<T extends HTMLElement = HTMLDivElement>(
     let trackInitialX: number | null = null
     let target: EventTarget | null
     const track = ref.current
-    if (options.autoCursor) {
+    if (autoCursor) {
       track.style.cursor = "grab"
     }
 
     function cancelClick(e: MouseEvent) {
-      if (
-        mouseInitialX &&
-        Math.abs(e.clientX - mouseInitialX) > options.dragClickAllowance
-      ) {
+      if (mouseInitialX && Math.abs(e.clientX - mouseInitialX) > dragClickAllowance) {
         e.preventDefault()
         e.stopPropagation()
       }
@@ -62,7 +55,7 @@ export default function useDraggable<T extends HTMLElement = HTMLDivElement>(
 
     function onMouseUp() {
       track.style.scrollBehavior = ""
-      if (options.autoCursor) {
+      if (autoCursor) {
         track.style.cursor = "grab"
       }
       requestAnimationFrame(() => {
@@ -76,7 +69,7 @@ export default function useDraggable<T extends HTMLElement = HTMLDivElement>(
       if (e.button !== 0) {
         return
       }
-      if (options.autoCursor) {
+      if (autoCursor) {
         track.style.cursor = "grabbing"
       }
       mouseInitialX = e.clientX
@@ -98,7 +91,7 @@ export default function useDraggable<T extends HTMLElement = HTMLDivElement>(
       }
       target.removeEventListener("click", cancelClick)
     }
-  }, [options])
+  }, [autoCursor, dragClickAllowance])
 
   return ref
 }
