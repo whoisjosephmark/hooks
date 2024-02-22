@@ -6,7 +6,7 @@ import { useState, useEffect, useRef, useCallback } from "react"
  * @returns [x: number, y: number]
  */
 export default function useMouseCoords() {
-  const [coords, setCoords] = useState([0, 0])
+  const [coords, setCoords] = useState<[number, number]>([0, 0])
   const awaitingIdle = useRef(false)
 
   const mouseFollower = useCallback((e: MouseEvent) => {
