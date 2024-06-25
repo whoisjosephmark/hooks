@@ -18,9 +18,9 @@ export type useDraggableOptions = {
  *
  * @return React.RefObject<T extends HTMLElement>
  */
-export default function useDraggable<T extends HTMLElement = HTMLDivElement>(options: useDraggableOptions) {
+export default function useDraggable<T extends HTMLElement = HTMLDivElement>(options?: useDraggableOptions) {
   const ref = useRef<T>()
-  const { autoCursor = true, dragClickAllowance = DRAG_CLICK_ALLOWANCE } = options
+  const { autoCursor = true, dragClickAllowance = DRAG_CLICK_ALLOWANCE } = options || {}
 
   // Handling for click & drag to slide with mouse
   useEffect(() => {
