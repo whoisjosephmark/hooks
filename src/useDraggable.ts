@@ -36,6 +36,11 @@ export default function useDraggable<T extends HTMLElement = HTMLDivElement>(opt
       track.style.cursor = "grab"
     }
 
+    // Prevent native element dragging (e.g., <a>, <img>) while we are doing a scroll-drag
+    function preventNativeDrag(e: DragEvent) {
+      e.preventDefault()
+    }
+
     function cancelClick(e: MouseEvent) {
       if (mouseInitialX && Math.abs(e.clientX - mouseInitialX) > dragClickAllowance) {
         e.preventDefault()
@@ -58,11 +63,14 @@ export default function useDraggable<T extends HTMLElement = HTMLDivElement>(opt
       if (autoCursor) {
         track.style.cursor = "grab"
       }
+      track.style.userSelect = ""
       requestAnimationFrame(() => {
         track.style.scrollSnapType = ""
       })
       window.removeEventListener("mousemove", onDrag)
       window.removeEventListener("mouseup", onMouseUp)
+      // stop intercepting native drag events
+      track.removeEventListener("dragstart", preventNativeDrag, true)
     }
 
     function onMouseDown(e: MouseEvent) {
@@ -76,6 +84,9 @@ export default function useDraggable<T extends HTMLElement = HTMLDivElement>(opt
       trackInitialX = track.scrollLeft
       track.style.scrollBehavior = "auto"
       track.style.scrollSnapType = "none"
+      track.style.userSelect = "none" // avoid text selection while dragging
+      // Intercept native drag events on links/images while dragging
+      track.addEventListener("dragstart", preventNativeDrag, true)
       window.addEventListener("mousemove", onDrag)
       window.addEventListener("mouseup", onMouseUp)
       target = e.target
